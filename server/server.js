@@ -17,11 +17,11 @@ io.on('connection', (socket) => {
   console.log(`User connected, ${clients} Users(s) online`);
 
   socket.on('createMessage', (newMessage) => {
-    socket.emit('newMessage', {
+    io.emit('newMessage', {
       from: newMessage.from,
       text: newMessage.text,
-      createdAt: "newMessage.createdAt"
-    });
+      createdAt: new Date().getTime()
+    })
   })
 
   socket.on('disconnect', () => {
