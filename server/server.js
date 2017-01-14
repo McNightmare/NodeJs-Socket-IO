@@ -16,6 +16,20 @@ io.on('connection', (socket) => {
   clients++;
   console.log(`User connected, ${clients} Users(s) online`);
 
+  socket.broadcast.emit('joinBroadcast', 'a user joined the room');
+
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'welcome to the chat app',
+    createdAt: new Date().getTime()
+  });
+
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'A user has joined the chatroom',
+    createdAt: new Date().getTime()
+  });
+
   socket.on('createMessage', (newMessage) => {
     io.emit('newMessage', {
       from: newMessage.from,
